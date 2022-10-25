@@ -1,13 +1,12 @@
 from direct.showbase.ShowBase import ShowBase
+from mapmanager import MapManager
 
 
 class Game(ShowBase):
     def __init__(self):
         super().__init__()
-        self.model = loader.loadModel('models/environment')
-        self.model.reparentTo(render)
-        self.model.setScale(0.1)
-        self.model.setPos(-2, 25, -3)
+        self.land = MapManager()
+        base.camLens.setFov(90)
 
 game = Game()
 game.run()
