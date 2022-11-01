@@ -28,4 +28,4 @@ def ex_three():
                 summ += int(item)
     print('Сумма всех чисел из файла =', summ)
 
-ex_three()
+# ex_three()             1130
