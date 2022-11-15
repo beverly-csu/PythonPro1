@@ -82,7 +82,26 @@ class Hero:
         pos = self.look_at(angle)
         self.hero.setPos(pos)
 
+    def move_to(self, angle):
+        if self.mode:
+            self.just_move(angle)
+
+    def forward(self):
+        angle = (self.hero.getH()) % 360
+        self.move_to(angle)
+
+    def back(self):
+        angle = (self.hero.getH() + 180) % 360
+        self.move_to(angle)
     
+    def left(self):
+        angle = (self.hero.getH() + 90) % 360
+        self.move_to(angle)
+    
+    def right(self):
+        angle = (self.hero.getH() + 270) % 360
+        self.move_to(angle)
 
     def accept_events(self):
         base.accept(KEY_SWITCH_CAMERA, self.changeView)
+        
