@@ -6,6 +6,9 @@ KEY_BACK = 's'
 KEY_LEFT = 'a'
 KEY_RIGHT = 'd'
 
+KEY_UP = 'e'
+KEY_DOWN = 'q'
+
 KEY_TURN_LEFT = 'n'
 KEY_TURN_RIGHT = 'm'
 
@@ -102,11 +105,24 @@ class Hero:
         angle = (self.hero.getH() + 270) % 360
         self.move_to(angle)
 
+    def up(self):
+        if self.mode:
+            self.hero.setZ(self.hero.getZ() +  1)
+
+    def down(self):
+        if self.mode and self.hero.getZ() > 1:
+            self.hero.setZ(self.hero.getZ() - 1)
+
     def accept_events(self):
         base.accept(KEY_TURN_LEFT, self.turn_left)
         base.accept(KEY_TURN_LEFT + '-repeat', self.turn_left)
         base.accept(KEY_TURN_RIGHT, self.turn_right)
         base.accept(KEY_TURN_RIGHT + '-repeat', self.turn_right)
+
+        base.accept(KEY_UP, self.up)
+        base.accept(KEY_UP + '-repeat', self.up)
+        base.accept(KEY_DOWN, self.down)
+        base.accept(KEY_DOWN + '-repeat', self.down)
 
         base.accept(KEY_FORWARD, self.forward)
         base.accept(KEY_FORWARD + '-repeat', self.forward)
