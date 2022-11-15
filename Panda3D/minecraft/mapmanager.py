@@ -29,7 +29,18 @@ class MapManager():
         self.block.setPos(position)
         color = self.getColor(int(position[2]))
         self.block.setColor(color)
+        self.block.setTag('at', str(position))
         self.block.reparentTo(self.land)
+
+    def findBlocks(self, pos):
+        return self.land.findAllMatches('=at=' + str(pos))
+
+    def isEmpty(self, pos):
+        blocks = self.findBlocks(pos)
+        if blocks:
+            return False
+        else:
+            return True
 
     def loadLand(self, filename):
         self.clear()
