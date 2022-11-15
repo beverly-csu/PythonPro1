@@ -34,7 +34,7 @@ class Hero:
 
     def cameraUp(self):
         pos = self.hero.getPos()
-        base.mouseInterfaceMode.setPos(-pos[0], -pos[1], -pos[2]-3)
+        base.mouseInterfaceNode.setPos(-pos[0], -pos[1], -pos[2]-3)
         base.camera.reparentTo(render)
         base.enableMouse()
         self.cameraOn = False
