@@ -59,6 +59,13 @@ class MapManager():
         blocks = self.findBlocks(pos)
         for block in blocks:
             block.removeNode()
+    
+    def delBlockFrom(self, pos):
+        x, y, z = self.findHighestEmpty(pos)
+        pos = x, y, z - 1
+        for block in self.findBlocks(pos):
+            block.removeNode()
+
 
     def loadLand(self, filename):
         self.clear()
