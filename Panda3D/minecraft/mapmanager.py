@@ -40,7 +40,7 @@ class MapManager():
         if blocks:
             return False
         else:
-            return True
+            return True 
 
     def findHighestEmpty(self, pos):
         x, y, z = pos # (1, 6, 9)

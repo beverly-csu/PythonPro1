@@ -12,6 +12,9 @@ KEY_DOWN = 'q'
 KEY_TURN_LEFT = 'n'
 KEY_TURN_RIGHT = 'm'
 
+KEY_BUILD = 'b'
+KEY_DESTROY = 'v'
+
 
 class Hero:
     def __init__(self, position, land):
@@ -88,6 +91,19 @@ class Hero:
     def move_to(self, angle):
         if self.mode:
             self.just_move(angle)
+        else:
+            self.try_move(angle)
+    
+    def try_move(self, angle):
+        pos = self.look_at(angle)
+        if self.land.isEmpty(pos):
+            pos = self.land.findHighestEmpty(pos)
+            self.hero.setPos(pos)
+        else:
+            pos = (pos[0], pos[1], pos[2] + 1)
+            if self.land.isEmpty(pos):
+                self.hero.setPos(pos)
+
 
     def forward(self):
         angle = (self.hero.getH()) % 360
