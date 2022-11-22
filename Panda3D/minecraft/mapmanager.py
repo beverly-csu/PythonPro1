@@ -42,6 +42,21 @@ class MapManager():
         else:
             return True
 
+    def findHighestEmpty(self, pos):
+        x, y, z = pos # (1, 6, 9)
+        z = 1
+        while not self.isEmpty((x, y, z)):
+            z += 1
+        return (x, y, z)
+
+    def buildBlock(self, pos):
+        x, y, z = pos
+        new = self.findHighestEmpty(pos)
+        if new[2] <= z + 1:
+            self.addBlock(new)
+
+    
+
     def loadLand(self, filename):
         self.clear()
         with open(filename) as file:
