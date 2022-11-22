@@ -103,7 +103,18 @@ class Hero:
             pos = (pos[0], pos[1], pos[2] + 1)
             if self.land.isEmpty(pos):
                 self.hero.setPos(pos)
+    
+    def build(self):
+        angle = self.hero.getH() % 360
+        pos = self.look_at(angle)
+        if self.mode:
+            self.land.addBlock(pos)
 
+    def destroy(self):
+        angle = self.hero.getH() % 360
+        pos = self.look_at(angle)
+        if self.mode:
+            self.land.delBlock(pos)
 
     def forward(self):
         angle = (self.hero.getH()) % 360
@@ -129,6 +140,9 @@ class Hero:
         if self.mode and self.hero.getZ() > 1:
             self.hero.setZ(self.hero.getZ() - 1)
 
+    def change_mode(self):
+        self.mode = not self.mode
+
     def accept_events(self):
         base.accept(KEY_TURN_LEFT, self.turn_left)
         base.accept(KEY_TURN_LEFT + '-repeat', self.turn_left)
@@ -150,3 +164,7 @@ class Hero:
         base.accept(KEY_RIGHT + '-repeat', self.right)
 
         base.accept(KEY_SWITCH_CAMERA, self.changeView)
+
+        base.accept(KEY_BUILD, self.build)
+        base.accept(KEY_DESTROY, self.destroy)
+        base.accept(KEY_SWITCH_MODE, self.change_mode)
