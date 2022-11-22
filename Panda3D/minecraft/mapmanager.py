@@ -55,7 +55,10 @@ class MapManager():
         if new[2] <= z + 1:
             self.addBlock(new)
 
-    
+    def delBlock(self, pos):
+        blocks = self.findBlocks(pos)
+        for block in blocks:
+            block.removeNode()
 
     def loadLand(self, filename):
         self.clear()
