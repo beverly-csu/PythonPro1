@@ -3,7 +3,7 @@ import pickle
 class MapManager():
     def __init__(self):
         self.model = 'block.egg'
-        self.texture = 'block.png'
+        self.texture = 'new_block.png'
         self.colors = [(0.2, 0.2, 0.35, 1),
                        (0.2, 0.5, 0.2, 1),
                        (0.7, 0.2, 0.2, 1),
