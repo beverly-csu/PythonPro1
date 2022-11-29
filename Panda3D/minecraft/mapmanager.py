@@ -1,3 +1,5 @@
+import pickle
+
 class MapManager():
     def __init__(self):
         self.model = 'block.egg'
@@ -79,3 +81,20 @@ class MapManager():
                         block = self.addBlock((x, y, z0))
                     x += 1
                 y += 1
+
+    def saveMap(self):
+        blocks = self.land.getChildren()            # получаем все блоки из родительского узла
+        with open('my_map.dat', 'wb') as fout:      # открываем бинарный файл на запись
+            pickle.dump(len(blocks), fout)          # первым числом записываем количество блоков
+            for block in blocks:                    # организуем цикл для перебора всех блоков
+                x, y, z = block.getPos()            # получем координаты определенного блока
+                pos = (int(x), int(y), int(z))      # преобразуем координаты в цельную структуру
+                pickle.dump(pos, fout)              # записываем в файл координаты каждого блока
+
+    def loadMap(self):
+        self.clear()                                # очищаем существующую карту
+        with open('my_map.dat', 'rb') as fin:       # открываем бинарный файл на чтение
+            length = pickle.load(fin)               # считываем первое значение из файла (количество блоков)
+            for i in range(length):                 # организуем цикл для считывания координат всех блоков
+                pos = pickle.load(fin)              # считываем в переменную pos координаты блока
+                self.addBlock(pos)                  # добавляем блок на игровую карту

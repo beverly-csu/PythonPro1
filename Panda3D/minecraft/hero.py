@@ -15,6 +15,9 @@ KEY_TURN_RIGHT = 'm'
 KEY_BUILD = 'b'
 KEY_DESTROY = 'v'
 
+KEY_SAVE = 'h'
+KEY_LOAD = 'g'
+
 
 class Hero:
     def __init__(self, position, land):
@@ -172,3 +175,6 @@ class Hero:
         base.accept(KEY_BUILD, self.build)
         base.accept(KEY_DESTROY, self.destroy)
         base.accept(KEY_SWITCH_MODE, self.change_mode)
+
+        base.accept(KEY_SAVE, self.land.saveMap)
+        base.accept(KEY_LOAD, self.land.loadMap)
