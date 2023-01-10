@@ -93,8 +93,19 @@ def show_tables():
     show('quiz')
     show('quiz_content')
 
+def clear_db():
+    open()
+    do('''DROP TABLE IF EXISTS quiz_content''')
+    do('''DROP TABLE IF EXISTS quiz''')
+    do('''DROP TABLE IF EXISTS question''')
+    close()
+
 def main():
+    clear_db()
     create()
+    add_questions()
+    add_quiz()
+    add_links()
     show_tables()
 
 if __name__ == '__main__':
