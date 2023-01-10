@@ -26,7 +26,7 @@ def create():
         id INTEGER PRIMARY KEY,
         name VARCHAR)''')
 
-    do('''CREATE TABLE IF NOT EXISTS question (
+    do('''CREATE TABLE IF NOT EXISTS question ( 
         id INTEGER PRIMARY KEY,
         question VARCHAR,
         answer VARCHAR,
@@ -42,6 +42,7 @@ def create():
         FOREIGN KEY (question_id) REFERENCES question (id))''')
     
     close()
+
 
 def main():
     create()
