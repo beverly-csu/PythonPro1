@@ -5,18 +5,22 @@ DB_NAME = 'quiz.sqlite'
 conn = None
 cursor = None
 
+
 def open():
     global conn, cursor
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
+
 def close():
     cursor.close()
     conn.close()
 
+
 def do(query):
     cursor.execute(query)
     conn.commit()
+
 
 def create():
     open()
@@ -40,23 +44,31 @@ def create():
         question_id INTEGER,
         FOREIGN KEY (quiz_id) REFERENCES quiz (id),
         FOREIGN KEY (question_id) REFERENCES question (id))''')
-    
+
     close()
+
 
 def add_questions():
     questions = [
-        ('Сколько месяцев в году имеют 28 дней?', 'Все', 'Один', 'Ни одного', 'Два'),
-        ('Каким станет зелёный утёс, если упадёт в Красное море?', 'Мокрым', 'Красным', 'Не изменится', 'Фиолетовым'),
-        ('Какой рукой лучше размешивать чай?', 'Ложкой', 'Правой', 'Левой', 'Любой'),
-        ('Что не имеет длины, глубины, ширины, высоты, а можно измерить?', 'Время', 'Глупость', 'Море', 'Воздух'),
-        ('Когда сетью можно вытянуть воду?', 'Когда вода замерзла', 'Когда нет рыбы', 'Когда уплыла золотая рыбка', 'Когда сеть порвалась'),
-        ('Что больше слона и ничего не весит?', 'Тень слона', 'Воздушный шар', 'Парашют', 'Облако')
+        ('Сколько месяцев в году имеют 28 дней?',
+         'Все', 'Один', 'Ни одного', 'Два'),
+        ('Каким станет зелёный утёс, если упадёт в Красное море?',
+         'Мокрым', 'Красным', 'Не изменится', 'Фиолетовым'),
+        ('Какой рукой лучше размешивать чай?',
+         'Ложкой', 'Правой', 'Левой', 'Любой'),
+        ('Что не имеет длины, глубины, ширины, высоты, а можно измерить?',
+         'Время', 'Глупость', 'Море', 'Воздух'),
+        ('Когда сетью можно вытянуть воду?', 'Когда вода замерзла',
+         'Когда нет рыбы', 'Когда уплыла золотая рыбка', 'Когда сеть порвалась'),
+        ('Что больше слона и ничего не весит?',
+         'Тень слона', 'Воздушный шар', 'Парашют', 'Облако')
     ]
     open()
     cursor.executemany(
         '''INSERT INTO question (question, answer, wrong1, wrong2, wrong3) VALUES (?, ?, ?, ?, ?)''', questions)
     conn.commit()
     close()
+
 
 def add_quiz():
     quizes = [
@@ -68,6 +80,7 @@ def add_quiz():
     cursor.executemany('''INSERT INTO quiz (name) VALUES (?)''', quizes)
     conn.commit()
     close()
+
 
 def add_links():
     open()
@@ -82,6 +95,7 @@ def add_links():
         answer = input('Добавить связь (y / n)?')
     close()
 
+
 def show(table):
     query = '''SELECT * FROM ''' + table
     open()
@@ -89,10 +103,12 @@ def show(table):
     print(cursor.fetchall())
     close()
 
+
 def show_tables():
     show('question')
     show('quiz')
     show('quiz_content')
+
 
 def clear_db():
     open()
@@ -101,6 +117,22 @@ def clear_db():
     do('''DROP TABLE IF EXISTS question''')
     close()
 
+
+def get_question_after(question_id=0, quiz_id=1):
+    open()
+    query = '''
+    SELECT quiz_content.id, question.question, question.answer,
+    question.wrong1, question.wrong2, question.wrong3 
+    FROM question, quiz_content
+    WHERE quiz_content.question_id == question.id
+    AND quiz_content.id > ? AND quiz_content.quiz_id == ?
+    ORDER BY quiz_content.id'''
+    cursor.execute(query, [question_id, quiz_id])
+    result = cursor.fetchone()
+    close()
+    return result
+
+
 def main():
     clear_db()
     create()
@@ -108,6 +140,7 @@ def main():
     add_quiz()
     add_links()
     show_tables()
+
 
 if __name__ == '__main__':
     main()
