@@ -1,13 +1,26 @@
 from random import randint
-from flask import Flask, session, redirect, url_for
-from db_scripts import get_question_after
+from flask import Flask, request, session, redirect, url_for
+from db_scripts import get_question_after, get_quizes
 
+def quizes_list():
+    html = '''<html><head><title>Выбор викторины</title></head>
+    <body><h2>Выберите викторину:</h2><form method="POST" action="/">
+    <select name="quiz">'''
+    for quiz in get_quizes():
+        html += f'''<option value="{quiz[0]}">{quiz[1]}</option>'''
+    html += '''</select><p><input type="submit" value="Выбрать"></p>
+    </form></body></html>'''
+    return html
 
 def index():
-    max_quiz = 3
-    session['quiz'] = randint(1, max_quiz)
-    session['last_question'] = 0
-    return '<a href="/test">Начать викторину</a>'
+    if request.method == 'GET':
+        session['last_question'] = 0
+        quiz_form = quizes_list()
+        return quiz_form
+    else:
+        quiz_id = request.form.get('quiz')
+        session['quiz'] = int(quiz_id)
+        return redirect(url_for('test'))
 
 def test():
     result = get_question_after(session['last_question'], session['quiz'])
@@ -22,7 +35,7 @@ def result():
     return '<h3>Thats all :)</h3>'
 
 app = Flask(__name__)
-app.add_url_rule('/', 'index', index)
+app.add_url_rule('/', 'index', index, methods=['GET', 'POST'])
 app.add_url_rule('/test', 'test', test)
 app.add_url_rule('/result', 'result', result)
 app.config['SECRET_KEY'] = 'sadsadsadsasadsa'

@@ -133,6 +133,14 @@ def get_question_after(question_id=0, quiz_id=1):
     return result
 
 
+def get_quizes():
+    open()
+    cursor.execute('''SELECT * FROM quiz ORDER BY id''')
+    result = cursor.fetchall()
+    close()
+    return result
+
+
 def main():
     clear_db()
     create()
