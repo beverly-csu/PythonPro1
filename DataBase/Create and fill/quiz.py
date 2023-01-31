@@ -23,6 +23,9 @@ def index():
         return redirect(url_for('test'))
 
 def test():
+    if not ('quiz' in session) or int(session['quiz']) < 0:
+        return redirect(url_for('index'))
+
     result = get_question_after(session['last_question'], session['quiz'])
     if result is None or len(result) == 0:
         return redirect(url_for('result'))
