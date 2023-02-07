@@ -1,6 +1,14 @@
 from random import randint
 from flask import Flask, request, session, redirect, url_for
-from db_scripts import get_question_after, get_quizes
+from db_scripts import get_question_after, get_quizes, check_answer
+
+def save_answers():
+    answer = request.form.get('ans_text')
+    quest_id = request.form.get('q_id')
+    session['last_question'] = quest_id
+    session['total'] += 1
+    if check_answer(quest_id, answer):
+        session['answers'] += 1
 
 def quizes_list():
     html = '''<html><head><title>Выбор викторины</title></head>

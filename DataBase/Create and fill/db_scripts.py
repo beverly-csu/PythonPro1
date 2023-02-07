@@ -141,6 +141,22 @@ def get_quizes():
     return result
 
 
+def check_answer(q_id, ans_text):
+    query = '''SELECT question.answer FROM quiz_content, question
+    WHERE quiz_content.id = ? AND quiz_content.question_id = question_id'''
+    open()
+    cursor.execute(query, str(q_id))
+    result = cursor.fetchone()
+    close()
+    if result is None:
+        return False
+    else:
+        if result[0] == ans_text:
+            return True
+        else:
+            return False
+
+
 def main():
     clear_db()
     create()
