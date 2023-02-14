@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Викторина</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h2>Ваш результат:</h2>
+        <h3>{{ right }} правильных из {{ total }}</h3>
+        <a href="{{ url_for('index') }}">В начало</a>
+    </body>
+</html>
