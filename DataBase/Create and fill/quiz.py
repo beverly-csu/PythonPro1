@@ -42,7 +42,7 @@ def test():
 def result():
     procent = session['right'] / session['total'] * 100
     procent = round(procent, 2)
-    return 
+    return render_template('result.html', right=session['right'], total=session['total'], procent=procent)
 
 import os
 app = Flask(__name__, template_folder=os.getcwd(), static_folder=os.getcwd())
