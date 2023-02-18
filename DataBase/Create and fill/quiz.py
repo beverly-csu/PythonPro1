@@ -8,7 +8,7 @@ def save_answers():
     session['last_question'] = quest_id
     session['total'] += 1
     if check_answer(quest_id, answer):
-        session['answers'] += 1
+        session['right'] += 1
 
 def index():
     if request.method == 'GET':
@@ -17,6 +17,8 @@ def index():
     else:
         quiz_id = request.form.get('quiz')
         session['quiz'] = int(quiz_id)
+        session['right'] = 0
+        session['total'] = 0
         return redirect(url_for('test'))
 
 def test():
@@ -38,7 +40,9 @@ def test():
         return render_template('test.html', quest_id=result[0], question=result[1], answers_list=answers_list)
 
 def result():
-    return '<h3>Thats all :)</h3>'
+    procent = session['right'] / session['total'] * 100
+    procent = round(procent, 2)
+    return 
 
 import os
 app = Flask(__name__, template_folder=os.getcwd(), static_folder=os.getcwd())
