@@ -6,7 +6,9 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <h2>Выберите викторину:</h2>
+        <div class="title">
+            <h2 class="title-text">Выберите викторину:</h2>
+        </div>
         <form action="/" method="POST">
             <select name="quiz">
                 {% for id, name in q_list %}

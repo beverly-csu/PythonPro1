@@ -1,0 +1,12 @@
+.title {
+    background-color: rgb(116, 16, 131);
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    border-radius: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
